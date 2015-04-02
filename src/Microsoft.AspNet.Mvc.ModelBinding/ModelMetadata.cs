@@ -289,5 +289,15 @@ namespace Microsoft.AspNet.Mvc.ModelBinding
         {
             return DisplayName ?? PropertyName ?? ModelType.Name;
         }
+
+        /// <summary>
+        /// Gets or sets a property accessor delegate to get the property value from a model object.
+        /// </summary>
+        public abstract Func<object, object> PropertyAccessor { get; }
+
+        /// <summary>
+        /// Gets or sets a property setter delegate to set the property value on a model object.
+        /// </summary>
+        public abstract Action<object, object> PropertySetter { get; }
     }
 } 

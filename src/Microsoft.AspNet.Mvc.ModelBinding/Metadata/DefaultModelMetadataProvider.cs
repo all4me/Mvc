@@ -120,12 +120,12 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
                     propertyHelper.Property));
 
                 var propertyEntry = new DefaultMetadataDetails(propertyKey, attributes);
-                if (propertyHelper.Property.CanRead && propertyHelper.Property.GetMethod?.IsPrivate == true)
+                if (propertyHelper.Property.CanRead && propertyHelper.Property.GetMethod?.IsPrivate == false)
                 {
                     propertyEntry.PropertyAccessor = PropertyHelper.MakeFastPropertyGetter(propertyHelper.Property);
                 }
 
-                if (propertyHelper.Property.CanWrite && propertyHelper.Property.SetMethod?.IsPrivate == true)
+                if (propertyHelper.Property.CanWrite && propertyHelper.Property.SetMethod?.IsPrivate == false)
                 {
                     propertyEntry.PropertySetter = PropertyHelper.MakeFastPropertySetter(propertyHelper.Property);
                 }

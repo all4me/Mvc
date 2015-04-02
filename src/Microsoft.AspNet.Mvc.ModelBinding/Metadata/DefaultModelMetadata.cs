@@ -286,7 +286,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
                     }
                     else
                     {
-                        _isReadOnly = _details.PropertySetter != null;
+                        _isReadOnly = _details.PropertySetter == null;
                     }
                 }
 
@@ -405,6 +405,24 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
                 }
 
                 return _validatorMetadata;
+            }
+        }
+
+        /// <inheritdoc />
+        public override Func<object, object> PropertyAccessor
+        {
+            get
+            {
+                return _details.PropertyAccessor;
+            }
+        }
+
+        /// <inheritdoc />
+        public override Action<object, object> PropertySetter
+        {
+            get
+            {
+                return _details.PropertySetter;
             }
         }
     }
