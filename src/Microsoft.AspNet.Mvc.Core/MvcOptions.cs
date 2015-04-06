@@ -8,6 +8,7 @@ using Microsoft.AspNet.Mvc.Core;
 using Microsoft.AspNet.Mvc.OptionDescriptors;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.AspNet.Mvc.ModelBinding.Metadata;
+using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 
 namespace Microsoft.AspNet.Mvc
 {
@@ -32,6 +33,7 @@ namespace Microsoft.AspNet.Mvc
             ValidationExcludeFilters = new List<ExcludeValidationDescriptor>();
             ModelMetadataDetailsProviders = new List<IMetadataDetailsProvider>();
             ModelValidatorProviders = new List<ModelValidatorProviderDescriptor>();
+            ClientModelValidatorProviders = new List<IClientModelValidatorProvider>();
             CacheProfiles = new Dictionary<string, CacheProfile>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -118,6 +120,12 @@ namespace Microsoft.AspNet.Mvc
         /// <see cref="ModelBinding.Validation.CompositeModelValidatorProvider"/>.
         /// </summary>
         public IList<ModelValidatorProviderDescriptor> ModelValidatorProviders { get; }
+
+        /// <summary>
+        /// Gets a list of <see cref="IClientModelValidatorProvider"/>s used by 
+        /// <see cref="ModelBinding.Validation.CompositeClientModelValidatorProvider"/>.
+        /// </summary>
+        public IList<IClientModelValidatorProvider> ClientModelValidatorProviders { get; set; }
 
         /// <summary>
         /// Gets a list of descriptors that represent <see cref="Rendering.IViewEngine"/> used
