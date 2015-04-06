@@ -284,9 +284,13 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
                     {
                         _isReadOnly = BindingMetadata.IsReadOnly;
                     }
-                    else
+                    else if (MetadataKind == ModelMetadataKind.Property)
                     {
                         _isReadOnly = _details.PropertySetter == null;
+                    }
+                    else
+                    {
+                        _isReadOnly = false;
                     }
                 }
 

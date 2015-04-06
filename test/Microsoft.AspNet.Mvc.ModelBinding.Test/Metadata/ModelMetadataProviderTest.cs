@@ -696,9 +696,51 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
             Assert.False(metadata.IsRequired);
         }
 
+        [Fact]
+        public void PropertySetter_NotNull_ForPublicSetProperty()
+        {
+            // Arrange
+            var metadataProvider = TestModelMetadataProvider.CreateDefaultProvider();
+
+            // Act
+            var metadata = metadataProvider.GetMetadataForProperty(
+                typeof(ClassWithPublicSetProperty),
+                nameof(ClassWithPublicSetProperty.StringProperty));
+
+            // Assert
+            Assert.NotNull(metadata.PropertySetter);
+            Assert.NotNull(metadata.PropertyAccessor);
+        }
+
+        [Fact]
+        public void PropertySetter_Null_ForPrivateSetProperty()
+        {
+            // Arrange
+            var metadataProvider = TestModelMetadataProvider.CreateDefaultProvider();
+
+            // Act
+            var metadata = metadataProvider.GetMetadataForProperty(
+                typeof(ClassWithPrivateSetProperty),
+                nameof(ClassWithPrivateSetProperty.StringProperty));
+
+            // Assert
+            Assert.Null(metadata.PropertySetter);
+            Assert.NotNull(metadata.PropertyAccessor);
+        }
+
         private IModelMetadataProvider CreateProvider(params object[] attributes)
         {
             return new AttributeInjectModelMetadataProvider(attributes);
+        }
+
+        private class ClassWithPrivateSetProperty
+        {
+            public string StringProperty { private set; get; }
+        }
+
+        private class ClassWithPublicSetProperty
+        {
+            public string StringProperty { set; get; }
         }
 
         [DataContract]

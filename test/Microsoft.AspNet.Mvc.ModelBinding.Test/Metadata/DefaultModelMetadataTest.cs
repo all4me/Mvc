@@ -411,8 +411,72 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
             Assert.Equal(firstPropertiesEvaluation, secondPropertiesEvaluation);
         }
 
+        [Fact]
+        public void IsReadOnly_returnsFalse_ForType()
+        {
+            // Arrange
+            var detailsProvider = new EmptyCompositeMetadataDetailsProvider();
+            var provider = new DefaultModelMetadataProvider(detailsProvider);
+
+            var key = ModelMetadataIdentity.ForType(typeof(int[]));
+            var cache = new DefaultMetadataDetails(key, new object[0]);
+
+            var metadata = new DefaultModelMetadata(provider, detailsProvider, cache);
+
+            // Act
+            var isReadOnly = metadata.IsReadOnly;
+
+            // Assert
+            Assert.False(isReadOnly);
+        }
+
+        [Fact]
+        public void IsReadOnly_returnsTrue_ForPrivateSetProperty()
+        {
+            // Arrange
+            var detailsProvider = new EmptyCompositeMetadataDetailsProvider();
+            var provider = new DefaultModelMetadataProvider(detailsProvider);
+
+            var key = ModelMetadataIdentity.ForType(typeof(Foo));
+            var cache = new DefaultMetadataDetails(key, new object[0]);
+
+            var metadata = new DefaultModelMetadata(provider, detailsProvider, cache);
+
+            // Act
+            var isReadOnly = metadata.Properties["Bar"].IsReadOnly;
+
+            // Assert
+            Assert.True(isReadOnly);
+        }
+
+        [Fact]
+        public void IsReadOnly_returnsFalse_ForPublicSetProperty()
+        {
+            // Arrange
+            var detailsProvider = new EmptyCompositeMetadataDetailsProvider();
+            var provider = new DefaultModelMetadataProvider(detailsProvider);
+
+            var key = ModelMetadataIdentity.ForType(typeof(Foo));
+            var cache = new DefaultMetadataDetails(key, new object[0]);
+
+            var metadata = new DefaultModelMetadata(provider, detailsProvider, cache);
+
+            // Act
+            var isReadOnly = metadata.Properties["Baz"].IsReadOnly;
+
+            // Assert
+            Assert.False(isReadOnly);
+        }
+
         private void ActionMethod(string input)
         {
+        }
+
+        private class Foo
+        {
+            public string Bar { private set; get; }
+
+            public int Baz { set; get; }
         }
     }
 }
