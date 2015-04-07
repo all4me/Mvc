@@ -280,17 +280,17 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
             {
                 if (!_isReadOnly.HasValue)
                 {
-                    if (BindingMetadata.IsReadOnly.HasValue)
+                    if (MetadataKind == ModelMetadataKind.Type)
+                    {
+                        _isReadOnly = false;
+                    }
+                    else if (BindingMetadata.IsReadOnly.HasValue)
                     {
                         _isReadOnly = BindingMetadata.IsReadOnly;
                     }
-                    else if (MetadataKind == ModelMetadataKind.Property)
-                    {
-                        _isReadOnly = _details.PropertySetter == null;
-                    }
                     else
                     {
-                        _isReadOnly = false;
+                        _isReadOnly = _details.PropertySetter == null;
                     }
                 }
 

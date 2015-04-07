@@ -412,7 +412,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         }
 
         [Fact]
-        public void IsReadOnly_returnsFalse_ForType()
+        public void IsReadOnly_ReturnsFalse_ForType()
         {
             // Arrange
             var detailsProvider = new EmptyCompositeMetadataDetailsProvider();
@@ -431,7 +431,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         }
 
         [Fact]
-        public void IsReadOnly_returnsTrue_ForPrivateSetProperty()
+        public void IsReadOnly_ReturnsTrue_ForPrivateSetProperty()
         {
             // Arrange
             var detailsProvider = new EmptyCompositeMetadataDetailsProvider();
@@ -450,7 +450,7 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         }
 
         [Fact]
-        public void IsReadOnly_returnsFalse_ForPublicSetProperty()
+        public void IsReadOnly_ReturnsFalse_ForPublicSetProperty()
         {
             // Arrange
             var detailsProvider = new EmptyCompositeMetadataDetailsProvider();

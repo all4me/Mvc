@@ -728,6 +728,23 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
             Assert.NotNull(metadata.PropertyAccessor);
         }
 
+        [Fact]
+        public void Metadata_Null_ForPrivateGetProperty()
+        {
+            // Arrange
+            var metadataProvider = TestModelMetadataProvider.CreateDefaultProvider();
+            var type = typeof(ClassWithPrivateGetProperty);
+            var propertyName = nameof(ClassWithPrivateGetProperty.StringProperty);
+
+            // Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                metadataProvider.GetMetadataForProperty(type, propertyName);
+            });
+            Assert.Equal($"The property {type}.{propertyName} could not be found.{Environment.NewLine}Parameter name: propertyName",
+                exception.Message);
+        }
+
         private IModelMetadataProvider CreateProvider(params object[] attributes)
         {
             return new AttributeInjectModelMetadataProvider(attributes);
@@ -741,6 +758,11 @@ namespace Microsoft.AspNet.Mvc.ModelBinding.Metadata
         private class ClassWithPublicSetProperty
         {
             public string StringProperty { set; get; }
+        }
+
+        private class ClassWithPrivateGetProperty
+        {
+            public string StringProperty { set; private get; }
         }
 
         [DataContract]
